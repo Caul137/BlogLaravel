@@ -15,8 +15,8 @@
         </div>
     </div>
 
-   <a href="/admin/posts">Seus posts</a> 
-   <br>
-    <a href="/">Pagina Inicial</a> 
+    <a href="/admin/posts">Seus posts</a>
+    <br>
+    <a href="/">Pagina Inicial</a>
 
 </x-app-layout>

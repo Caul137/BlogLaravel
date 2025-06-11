@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Posts;
+use App\Models\Comment;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +24,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(PostsSeeder::class);
-
+        $this->call(CommentSeeder::class);
     }
 }

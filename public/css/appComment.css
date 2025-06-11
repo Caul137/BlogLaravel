@@ -1,0 +1,157 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;	
+}
+
+body {
+    overflow-x: hidden;
+      background: linear-gradient(80deg, #b9b9b9 , #e0dcdc);
+   
+}
+
+
+
+.BlogTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body .blogsComment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+   
+}
+
+.blogsComment{
+    padding: 50px;
+    display: flex;
+    gap: 50px;
+}
+
+.blogContainerComment{
+  width:  40vw;
+  height: 70vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 6px 6px 6px rgba(0,0,0,0.5);
+  border-radius: 10px;
+  padding: 30px;
+
+}
+
+.blogImg{
+    width: 70%;
+    height: 100%;
+
+}
+
+.comment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px
+
+}
+
+.comment .commentInput{
+    width: 200px;
+    height: 50px;
+    background-color: black;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    border-radius: 50px;
+
+    &&:hover{
+    padding: 10px;
+    background-color: rgb(247, 244, 244);
+    transition: ease-in-out 0.3s;
+    color: #000;
+    }
+
+  
+}
+
+
+.comment .commentInput::placeholder{
+    color: rgb(224, 222, 222);
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.comment .commentSubmit{
+    width: 100px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    &&:hover{
+    padding: 10px;
+    background-color: rgb(247, 244, 244);
+    transition: ease-in-out 0.3s;
+    color: #000;
+    }
+}
+
+
+.comments{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.selfComment{
+ display: flex;
+ align-items: center;
+ width: 100%;
+ height: 100%;
+ padding: 10px;
+ background-color: rgb(236, 236, 236);
+ color: #3a3939;
+ border-radius: 10px;
+}
+
+.comments button{
+height: 50px;
+width: 50px;
+background-color: rgb(255, 255, 255);
+position: absolute;
+left: 89.5%;
+border-radius: 10px;
+cursor: pointer;
+border: none;
+padding: 5px;
+text-align: center;
+
+&&:hover{
+   background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    transition: ease-in-out 0.3s;
+    transform: scale(1.1);
+    left: 88.6%; 
+    height: 50px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+}
+}

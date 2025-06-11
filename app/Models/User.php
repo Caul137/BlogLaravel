@@ -36,5 +36,10 @@ public function posts():HasMany {
 
 }
 
+ public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
 }
