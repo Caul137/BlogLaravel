@@ -94,3 +94,29 @@ color: black;
 
 
 
+.blogContainerAdmin{
+  margin: 30px;
+  width: 300px;
+  height: 400px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(80deg, #e9e8e2 , #ecece9);
+  box-shadow: 6px 6px 6px rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+
+.delePostAdmin{
+cursor: pointer;
+text-align: center;
+ width: auto;
+ height: auto;
+ cursor: pointer;
+ background-color: black;
+ color: red;
+ padding: 5px;
+ border-radius: 5px;
+}
