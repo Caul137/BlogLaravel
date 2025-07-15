@@ -1,61 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+**Versão do PHP:** 8.4.5(cli)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+* Framework utilizado: **Breeze**
+  : > https://laravel.com/docs/9.x/starter-kits#breeze
+---
+ 
+**Instruções para rodar o projeto laravel:**
 
-## About Laravel
+* 1 - Configure o **.env** ⚙️ com as informações de conexão ao banco de dados
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* 2 - Instalar as dependências: 
+**instlar o breeze, dar um require nele, instalar as dependencias com o node e rodar o composer install**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* 3 - Rode as migrations: **php artisan migrate / e verifique se as tabelas foram criadas no banco de dados** 
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+* Obs: **verifique se está conectado ao banco de dados** ✔
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+   : > talvez precise fazer alguam configuração em **/config.php/database.php**
+   : > não se esqueca de criar as sessions para a migrate(**php artisan session:table**)
+   : > e depois rodar o comando php artisan migrate. Caso já haja tabelas criadas, rode o comando php artisan migrate:fresh. Ou se preferir utilize um rolllback, sua escolha.
+   : > *se não conseguir se conctar ao banco devido a algum erro, tente habilitar a extenção do mysql no **php.ini**
+   
+    
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+* 4 - Rode as seeds: **php artisan db:seed / caso precise rodar a seed posts também rode**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+* 5 - Carregue as imagens: **php artisan storage:link**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+* 6 -💻 Rode o servidor: **php artisan serve**  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* 7 - neste commit está utilizando **REACT + INERTIA**, então não se esqueça de baixar as dependências:
+* 
+  {
+* *Conferir que está utilizando o kit starter do breeze*
+* *rodar o npm run dev junto do artisan serve*
+* *verificar se o controller está retornando para a view ou o inertia::render()*
+* *verificar as rotas se contém os middwmiddlewares certos que o inertia adicionou ao projeto, como o logout e o dashboard*
+  }
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+;=================================;
+  ****
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+

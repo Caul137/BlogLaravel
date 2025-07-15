@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
+use \Inertia\Inertia;
 
 
 
@@ -20,30 +20,28 @@ class PostController extends Controller
 {
 
 
-    public function posts(Request $posts)
+    public function posts($id)
     {
 
-        $post = Posts::find($posts->id);
-        $comment = Comment::where('post_id', $posts->id)->get();
+     $post = Posts::with('user')->findOrFail($id);
+    $comment = Comment::with('user')->where('post_id', $id)->get();
 
-        
-        return view('posts.posts', compact('post', 'comment'));;
+    return Inertia::render('Post/Show', [
+        'post' => $post,
+        'comment' => $comment,
+        'authUser' => auth()->user(),
+    ]);
 
     }
 
 
-    public function commented(Request $request)
+    public function commented(CommentRequest $requestComment)
     {
 
-        $request->validate([
-            'comment' => 'required'
-            
-        ]);
-
-
+       
         $comment = new Comment();
-        $comment->comment = $request->comment;
-        $comment->post_id = $request->post_id;
+        $comment->comment = $requestComment->comment;
+        $comment->post_id = $requestComment->post_id;
         $comment->user_id = auth()->user()->id;
         $comment->save();
 

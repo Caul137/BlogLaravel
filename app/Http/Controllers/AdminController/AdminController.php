@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
+use \Inertia\Inertia;
 
 
 
@@ -30,20 +30,27 @@ class AdminController extends Controller
         $userAuth = auth()->user();
         $postsAuth = auth()->user()->posts;
 
-        $dados = [
+   
+        return inertia::render('Admin/AdminIndex', [
             'postsAll' => $postsAll,
             'usersAll' => $usersAll,
-            'postsAuth' => $postsAuth
-        ];
-
-        return view('admin.posts.index', $dados);
+            'postsAuth' => $postsAuth,
+            'userAuth' => $userAuth 
+        ]);
+        
     }
 
 
     public function createNewBlog()
     {
 
-        return view('admin.posts.create');
+ 
+
+        return inertia::render('Admin/AdminPostsCreate', [
+            'routeStore' => route('store')
+
+        ]);
+      
     }
 
     public function store(PostRequest $request)
@@ -61,7 +68,7 @@ class AdminController extends Controller
         $user->posts()->save($post);
         $posts = auth()->user()->posts;
 
-        return redirect()->route(('adminPost'));
+        return redirect()->route('adminPost');
     }
 
 
@@ -70,30 +77,31 @@ class AdminController extends Controller
 
         $post = Posts::find($posts);
 
-        $dados = [
+        return inertia::render('Admin/AdminPostsEdit', [
             'postsAll' => $post
-        ];
-
-        return view('admin.posts.edit', $dados);
+        ]);
+       
     }
 
     public function update($post, PostRequest $request)
     {
 
-        $data = $request->all();
-        if ($request->thumb) {
+    $postModel = Posts::findOrFail($post);
 
-            if ($post->thumb)
-                Storage::disk('public')->delete($post->thumb);
+        $data = $request->all();
+
+        if ($request->thumb) {
+            if ($postModel->thumb)
+                Storage::disk('public')->delete($postModel->thumb);
             $data['thumb'] = $request->thumb?->store('posts', 'public');
             ;
         }
 
         $post = Posts::find($post);
-        $post->update($data);
+        $postModel->update($data);
 
 
-        return redirect()->route('adminPost', $post->id);
+        return redirect()->route('adminPost');
     }
 
 
