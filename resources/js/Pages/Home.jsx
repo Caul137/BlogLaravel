@@ -1,59 +1,71 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link,usePage } from '@inertiajs/react';
 
-export default function Home({ postsAll, userAuth, routeHasLogin, routeHasRegister, redirectPost, routes }) {
+export default function Home({ postsAll, redirectPost, routes }) {
+    const { auth } = usePage().props;
+
+
+
     return (
         <div className="bg-[#292828] min-h-screen overflow-x-hidden">
+            <header className="relative w-full min-h-[15rem] bg-gradient-to-tr from-black via-purple-800 to-black p-5 flex flex-col justify-center items-center overflow-hidden">
 
-            <header className="relative w-full h-[15rem] bg-gradient-to-tr from-black via-purple-800 to-black p-5">
-
-                <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
-                    <h1 className='text-white font-bold text-5xl'>Blog </h1>
-                  {/* <img src="/storage/imgs/astro.png" alt="imagem de astro" className='w-100 h-48 rounded'>*/ }
+                <div className='w-full flex justify-center items-center'>
+                    <h1 className="text-white font-bold text-4xl sm:text-5xl md:text-6xl text-center leading-tight break-words">
+                        Blog
+                    </h1>
                 </div>
 
-        <div className='flex justify-end items-center'>
-                <main className="flex flex-col items-center justify-center gap-5 text-center px-6 py-4 rounded-lg shadow-md bg-gradient-to-tr from-[#8d82a5] to-[#48227e]">
 
-                    <div className="text-[20px] font-bold text-[#cec2f3] font-sans">
-                        {userAuth ? (
-                            <p>Olá, {userAuth.name}</p>
+
+                <div className="absolute top-5 right-5">
+                    <nav className="flex flex-col items-center justify-center gap-5 text-center px-6 py-4 rounded-lg shadow-md bg-gradient-to-tr from-[#8d82a5] to-[#48227e]">
+                        <div className="text-[20px] font-bold text-[#cec2f3] font-sans">
+                            {auth.user ? (
+                                <p>Olá, {auth.user.name}</p>
+                            ) : (
+                                <p>Você não está autenticado.</p>
+                            )}
+                        </div>
+
+                        {route('login') && route('register') && auth.user ? (
+                            <div>
+                                {routes?.dashboard && (
+                                    <Link href={route('dashboard')} className="text-[#cec2f3] font-semibold hover:underline">
+                                        Dashboard
+                                    </Link>
+                                )}
+                            </div>
                         ) : (
-                            <p>Você não está autenticado.</p>
+                            <div className="flex flex-col gap-2">
+                                {routes?.login && (
+                                    <Link href={route('login')} className="text-[#cec2f3] font-semibold hover:underline">
+                                        Login
+                                    </Link>
+                                )}
+                                {routes?.register && (
+                                    <Link href={route('register')} className="text-[#cec2f3] font-semibold hover:underline">
+                                        Register
+                                    </Link>
+                                )}
+                            </div>
                         )}
-                    </div>
-
-                    {routeHasLogin && routeHasRegister && userAuth ? (
-                        <div>
-                            {routes?.dashboard && (
-                                <Link href={routes.dashboard} className="text-[#cec2f3] font-semibold hover:underline">Dashboard</Link>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="flex flex-col gap-2">
-                            {routes?.login && (
-                                <Link href={routes.login} className="text-[#cec2f3] font-semibold hover:underline">Login</Link>
-                            )}
-                            {routes?.register && (
-                                <Link href={routes.register} className="text-[#cec2f3] font-semibold hover:underline">Register</Link>
-                            )}
-                        </div>
-                    )}
-                </main>
+                    </nav>
                 </div>
             </header>
 
 
-            <main className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-white text-3xl font-bold mb-6 text-center">Todos os Posts</h1>
 
+
+            <main className="p-6 max-w-7xl mx-auto">
+                <h2 className="text-white text-3xl font-bold mb-6 text-center">Todos os Posts</h2>
 
                 {postsAll.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {postsAll.map((post) => (
                             <div key={post.id} className="bg-black p-4 rounded shadow">
-                                <h2 className="text-xl font-semibold text-white flex justify-center">{post.title}</h2>
-                                <p className="text-white mt-1 flex justify-center">{post.content}</p>
+                                <h3 className="text-xl font-semibold text-white text-center">{post.title}</h3>
+                                <p className="text-white mt-1 text-center">{post.content}</p>
 
                                 {post.thumb && (
                                     <img
@@ -67,7 +79,7 @@ export default function Home({ postsAll, userAuth, routeHasLogin, routeHasRegist
 
                                 <Link
                                     href={`${redirectPost}${post.id}`}
-                                    className="block mt-3 text-indigo-600"
+                                    className="block mt-3 text-indigo-600 text-center"
                                 >
                                     Ver Post
                                 </Link>

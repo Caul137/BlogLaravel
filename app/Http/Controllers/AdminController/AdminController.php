@@ -5,52 +5,53 @@ namespace App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\Comment;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use \Inertia\Inertia;
-
-
+use function Laravel\Prompts\alert;
 
 class AdminController extends Controller
 {
 
 
+     public function dashboard()
+    {
+
+
+        //dd(auth()->user()->posts());
+    
+        return inertia::render('Admin/Dashboard', [
+            
+        ]);
+
+    }
+
+
 
     public function indexAdmin()
     {
-
-        $postsAll = Posts::all();
-        $usersAll = User::all();
-
-        $userAuth = auth()->user();
         $postsAuth = auth()->user()->posts;
-
-   
-        return inertia::render('Admin/AdminIndex', [
-            'postsAll' => $postsAll,
-            'usersAll' => $usersAll,
+    
+        return inertia::render('Admin/AdminPosts', [
             'postsAuth' => $postsAuth,
-            'userAuth' => $userAuth 
         ]);
-        
+
     }
 
 
     public function createNewBlog()
     {
-
- 
-
         return inertia::render('Admin/AdminPostsCreate', [
             'routeStore' => route('store')
 
         ]);
-      
+
     }
 
     public function store(PostRequest $request)
@@ -62,11 +63,12 @@ class AdminController extends Controller
         $post->slug = Str::slug($request->title);
         $post->thumb = $request->thumb?->store('posts', 'public');
 
-        //$post->save();
-
         $user = auth()->user();
         $user->posts()->save($post);
-        $posts = auth()->user()->posts;
+
+          if (!Gate::authorize('view', $post)) {
+            abort(403);
+          }
 
         return redirect()->route('adminPost');
     }
@@ -77,17 +79,28 @@ class AdminController extends Controller
 
         $post = Posts::find($posts);
 
+        if (!Gate::authorize('view', $post)) {
+            abort(403);
+        }
+
+
         return inertia::render('Admin/AdminPostsEdit', [
             'postsAll' => $post
         ]);
-       
+
     }
 
-    public function update($post, PostRequest $request)
+    public function update($post, PostRequest $request )
     {
+        $postModel = Posts::findOrFail($post);
 
-    $postModel = Posts::findOrFail($post);
+        if (!Gate::authorize('view', $postModel)) {
+            abort(403);
+        }
 
+      
+
+        
         $data = $request->all();
 
         if ($request->thumb) {
@@ -109,6 +122,12 @@ class AdminController extends Controller
     {
         $post = Posts::find($post);
         $post->delete();
+
+
+        if (!Gate::authorize('view', $post)) {
+            abort(403);
+        }
+
 
         return redirect()->back();
     }

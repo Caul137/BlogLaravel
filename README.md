@@ -40,13 +40,14 @@
 
 * 6 -💻 Rode o servidor: **php artisan serve**  
 
-* 7 - neste commit está utilizando **REACT + INERTIA**, então não se esqueça de baixar as dependências:
+* 7 - neste commit a aplicação está utilizando **REACT + INERTIA**, então não se esqueça de:
 * 
   {
-* *Conferir que está utilizando o kit starter do breeze*
-* *rodar o npm run dev junto do artisan serve*
-* *verificar se o controller está retornando para a view ou o inertia::render()*
-* *verificar as rotas se contém os middwmiddlewares certos que o inertia adicionou ao projeto, como o logout e o dashboard*
+* *baixar as dependências*;
+* *Conferir que está utilizando o kit starter do breeze*;
+* *rodar o npm run dev junto do artisan serve*;
+* *verificar se o controller está retornando para a view ou o inertia::render()*;
+* *verificar as rotas se contém os middwmiddlewares certos que o inertia adicionou ao ;projeto, como o logout e o dashboard*;
   }
 
 
@@ -54,5 +55,13 @@
   ****
 
 
+📩
+* Foi feito a implementação de email utilizando o **mailtrap** para testes, configure o .env caso queira utilizar. E não se esqueça de rodar a migrate:queue-table e failed-table
+
+* E também de rodar o woker!!
+
+**Funcionalidade: enviar mensagem de um coméntario para o dono do post**
+
+---
 
 

@@ -20,7 +20,7 @@ export default function AdminPostsEdit({ postsAll }) {
 
     return (
     
-    <div className='min-h-screen bg-gradient-to-b from-black via-black  to-purple-800 '>
+    <div className='min-h-screen bg-gradient-to-b from-black via-black  to-purple-800'>
         <div className="p-6">
             <h2 className="text-xl font-semibold text-white">Editar Post</h2>
 

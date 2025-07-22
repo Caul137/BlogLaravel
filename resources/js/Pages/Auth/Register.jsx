@@ -23,6 +23,9 @@ export default function Register() {
 
     return (
         <GuestLayout>
+            
+            <h1 className='flex justify-center items-center text-center text-white w-full h-full text-4xl py-10 '>Register</h1>
+
             <Head title="Register" />
 
             <form onSubmit={submit}>

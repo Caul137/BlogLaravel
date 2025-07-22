@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -9,13 +10,14 @@ use App\Http\Controllers\PostController\PostController;
 use App\Http\Controllers\AdminController\AdminController;
 use App\Http\Controllers\HomePageController\HomePageController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Mail\MailController;
+
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('controllerPost');
-
 Route::get('/post{id}', [PostController::class, 'posts'])->name('post');
 Route::post('/commented', [PostController::class, 'commented'])->name('commented');
-Route::get('/noPost{id}', [PostController::class, 'noPost'])->name('noPost');
+//Route::get('/noPost{id}', [PostController::class, 'noPost'])->name('noPost');
 Route::get('/comment/delete/{id}', [PostController::class, 'deleteComment'])->name('commentDelete');
 
 
@@ -23,14 +25,16 @@ Route::get('/comment/delete/{id}', [PostController::class, 'deleteComment'])->na
 
 
 
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Dashboard'); 
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'] 
+)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,5 +54,9 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
+
+
+
+
 
 require __DIR__ . '/auth.php';

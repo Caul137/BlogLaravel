@@ -1,9 +1,13 @@
 import React from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { Link } from '@inertiajs/react';
 
 
-export default function Show({ post, comment, authUser }) {
+
+export default function Show({ post, comment }) {
+
+const {auth} = usePage().props
+
     const {
         data,
         setData,
@@ -15,13 +19,18 @@ export default function Show({ post, comment, authUser }) {
         post_id: post.id,
     });
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        submit("/commented", {
+
+             submit("/commented", {
             preserveScroll: true,
             onSuccess: () => setData("comment", ""),
-        });
+            
+        } )
+        
     };
+
 
     return (
         <main className="bg-gradient-to-r from-black via-purple-800 to-black min-h-screen overflow-x-hidden py-10 px-4">
@@ -54,6 +63,7 @@ export default function Show({ post, comment, authUser }) {
         
             <form
                 onSubmit={handleSubmit}
+            
                 className="w-full max-w-3xl mx-auto mt-10 bg-[#100e14] shadow-md rounded-lg p-6"
             >
                 <h4 className="text-xl font-semibold text-white mb-4">
@@ -76,13 +86,14 @@ export default function Show({ post, comment, authUser }) {
                     </div>
                 )}
 
-                <button
-                    type="submit"
-                    className="bg-indigo-400 hover:bg-indigo-500 text-white px-4 py-2 rounded transition"
-                    disabled={processing}
+                <button className="bg-indigo-400 hover:bg-indigo-500 text-white px-4 py-2 rounded transition"
+                type="submit"
+                disabled={auth.user? false && processing : true} 
                 >
-                    Enviar
+                {auth.user? 'Enviar' : "você precisa estar logado para fazer um comentário"}
                 </button>
+
+
             </form>
 
       
@@ -108,8 +119,8 @@ export default function Show({ post, comment, authUser }) {
                             <span className="text-white">{c.comment}</span>
                         </div>
 
-                        {(authUser?.id === c.user_id ||
-                            authUser?.id === post.user_id) && (
+                        {(auth.user?.id === c.user_id ||
+                            auth.user?.id === post.user_id) && (
                             <form
                                 action={`/comment/delete/${c.id}`}
                                 method="GET"

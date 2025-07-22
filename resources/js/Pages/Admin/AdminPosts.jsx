@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
-import { router } from '@inertiajs/react';
 
-export default function AdminIndex({postsAuth, userAuth }) {
+
+export default function AdminIndex({postsAuth}) {
     return (
         <div className="min-h-screen bg-gradient-to-tr from-black via-black  to-purple-800 px-8 py-10">
           
@@ -20,6 +20,7 @@ export default function AdminIndex({postsAuth, userAuth }) {
                     >
                         Criar um post
                     </Link>
+                    
                 </div>
             </header>
 

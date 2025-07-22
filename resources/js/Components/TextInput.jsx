@@ -17,6 +17,7 @@ export default forwardRef(function TextInput(
     }, [isFocused]);
 
     return (
+        
         <input
             {...props}
             type={type}

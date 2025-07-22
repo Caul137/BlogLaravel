@@ -22,34 +22,13 @@ class HomePageController extends Controller
     {
 
         $postsAll = Posts::all();
-       # $usersAll = User::all();
-
-        $userAuth = auth()->user();
-        $postsAuth = auth()->user();
-
-
-        $routeHasLogin = Route::has('login');
-        $routeHasRegister = Route::has('register');
-        $urlDashBoard = url('/dashboard');
+ 
         $urlPosts = url('/post');
-        $noPost = url('noPost');
-        if($userAuth ){
-            $redirectPost = $urlPosts;
-        } else {
-            $redirectPost = $noPost;
-        }
-       
-
-
 
         return Inertia::render('Home',[
 
             'postsAll' => $postsAll,
-            'postsAuth' => $postsAuth,
-            'userAuth' => $userAuth,
-            'routeHasLogin' => $routeHasLogin,
-            'routeHasRegister' => $routeHasRegister,
-            'redirectPost' => $redirectPost,
+            'redirectPost' => $urlPosts,
             'routes' => [
             'login' => route('login'),
             'register' => route('register'),
