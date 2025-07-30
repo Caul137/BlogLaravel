@@ -63,5 +63,6 @@
 **Funcionalidade: enviar mensagem de um coméntario para o dono do post**
 
 ---
-
+**Websocket integrado com sucesso! Não qualquer coisa siga esta documentação: https://laravel.com/docs/12.x/broadcasting#using-example-application**
+*Porém, ao baixar as dependências, é para funcionar corretamente. E é importante limpar o cache com o optimze:clear*
 

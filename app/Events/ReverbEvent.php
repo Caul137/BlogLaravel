@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 // App/Events/ReverbEvent.php
 
-// ... (imports e use traits) ...
-
 class ReverbEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -34,11 +32,6 @@ class ReverbEvent implements ShouldBroadcast
         ];
     }
 
-    // REMOVA OU COMENTE ESTA FUNÇÃO:
-    // public function broadcastAs()
-    // {
-    //     return 'ReverbEvent';
-    // }
 
     public function broadcastWith(): array
     {

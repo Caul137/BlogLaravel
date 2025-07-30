@@ -10,20 +10,16 @@ export default function Show({ post, comment }) {
 
     const { auth } = usePage().props
     const [commentAbsolute, setCommentAbsolute] = useState(null)
+    const [comments, setComments] = useState(comment || [])
     const [replyContent, setReplyContent] = useState("");
 
  useEffect(() => {
-  
-        if (!window.Echo) {
-            console.error("Laravel Echo não está disponível. Verifique bootstrap.js.");
-            return; 
-        }
 
         const channelName = `have-any-comment.${post.id}`;
-        const eventToListen = 'App\\Events\\ReverbEvent'; 
+        const eventToListen = 'ReverbEvent'; 
 
-        console.log("Tentando escutar no canal:", channelName);
-        console.log(`Listener para '${eventToListen}' sendo adicionado.`);
+     //   console.log("Tentando escutar no canal:", channelName);
+      //  console.log(`Listener para '${eventToListen}' sendo adicionado.`);
 
         
         const channel = window.Echo.channel(channelName);
@@ -32,7 +28,7 @@ export default function Show({ post, comment }) {
         channel.listen(eventToListen, (eventPayload) => {
             try {
              
-                const receivedComment = eventPayload.data.comment;
+                const receivedComment = eventPayload.comment;
 
                
                 console.log("Novo comentário recebido do WebSocket:", receivedComment);
@@ -47,11 +43,11 @@ export default function Show({ post, comment }) {
             }
         });
 
-        console.log(`Listener ativado para '${eventToListen}' no canal '${channelName}'.`);
+       // console.log(`Listener ativado para '${eventToListen}' no canal '${channelName}'.`);
 
        
         return () => {
-            console.log("Listener desativado para o canal:", channelName);
+         //   console.log("Listener desativado para o canal:", channelName);
             channel.stopListening(eventToListen); 
         };
     }, [post.id]);
@@ -172,11 +168,11 @@ export default function Show({ post, comment }) {
                     Comentários:
                 </h4>
 
-                {comment.length === 0 && (
+                {comments.length === 0 && (
                     <p className="text-white">Nenhum comentário ainda.</p>
                 )}
 
-                {comment.map((c) => (
+                {comments.map((c) => (
                     <div
                         key={c.id}
                         className={`${commentAbsolute === c.id ? 'fixed top-0 right-5 w-[30%] h-[100%] overflow-y-scroll ' : 'static'}   bg-[#100e14] shadow-md p-4 flex flex-col sm:flex-row justify-between items-start border border-purple-800 rounded-2xl `}
