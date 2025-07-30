@@ -17,10 +17,9 @@ use App\Http\Controllers\Mail\MailController;
 Route::get('/', [HomePageController::class, 'index'])->name('controllerPost');
 Route::get('/post{id}', [PostController::class, 'posts'])->name('post');
 Route::post('/commented', [PostController::class, 'commented'])->name('commented');
+Route::get('/comment{id}', [PostController::class, 'comment'])->name('comment');
 //Route::get('/noPost{id}', [PostController::class, 'noPost'])->name('noPost');
 Route::get('/comment/delete/{id}', [PostController::class, 'deleteComment'])->name('commentDelete');
-
-
 
 
 

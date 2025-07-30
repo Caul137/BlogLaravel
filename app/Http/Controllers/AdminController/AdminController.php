@@ -4,20 +4,17 @@ namespace App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Models\Posts;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use \Inertia\Inertia;
-use function Laravel\Prompts\alert;
+
 
 class AdminController extends Controller
 {
+    use AuthorizesRequests;
 
 
      public function dashboard()
@@ -94,9 +91,8 @@ class AdminController extends Controller
     {
         $postModel = Posts::findOrFail($post);
 
-        if (!Gate::authorize('view', $postModel)) {
-            abort(403);
-        }
+      
+        $this->authorize('view', $postModel);
 
       
 

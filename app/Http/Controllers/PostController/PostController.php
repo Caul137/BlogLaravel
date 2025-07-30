@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PostController;
 
+use App\Events\ReverbEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use App\Jobs\PostOwnerJob;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Gate;
 use \Inertia\Inertia;
-
+use Illuminate\Support\Facades\Log;
 
 
 class PostController extends Controller
@@ -21,11 +22,16 @@ class PostController extends Controller
   {
 
     $post = Posts::with('user')->findOrFail($id);
-    $comment = Comment::with('user')->where('post_id', $id)->get();
+    $comments = Comment::where('post_id', $id)
+      ->whereNull('parent_id')
+      ->with(['user', 'replies.user'])
+      ->get();
 
+
+      
     return Inertia::render('Post/Show', [
       'post' => $post,
-      'comment' => $comment,
+      'comment' => $comments,
       'authUser' => auth()->user(),
     ]);
 
@@ -39,18 +45,19 @@ class PostController extends Controller
     $comment = new Comment();
     $comment->comment = $requestComment->comment;
     $comment->post_id = $requestComment->post_id;
+    $comment->parent_id = $requestComment->parent_id;
     $comment->user_id = auth()->user()->id;
-    $comment->save();
-    $emailOwner = Posts::with('user')->findOrFail($requestComment->post_id);
-
-
-    //dd($emailOwner->user->email)
-
-    PostOwnerJob::dispatch($comment, $emailOwner);
-
     if (Gate::denies('commented', $comment)) {
       abort(403);
     }
+    $comment->save();
+    
+    //$comment->load('user');
+  broadcast(new ReverbEvent($comment));
+    
+    $emailOwner = Posts::with('user')->findOrFail($requestComment->post_id);
+    PostOwnerJob::dispatch($comment, $emailOwner);
+
 
 
     return redirect()->back();
@@ -60,19 +67,20 @@ class PostController extends Controller
 
   public function deleteComment(Request $request)
   {
+
     $id = $request->id;
     $comment = Comment::find($id);
-    $comment->delete();
-
 
     if (Gate::denies('commented', $comment)) {
       abort(403);
+    } else {
+      $comment->delete();
     }
 
     return redirect()->back();
 
-
   }
+
 
 
 }

@@ -23,6 +23,7 @@ class CommentRequest extends FormRequest
     {
         return [
             'comment' => 'required|max:250',
+            'parent_id' => 'nullable|exists:comments,id',
         ];
     }
 
